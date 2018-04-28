@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Doc view</title>
+	{% load static %}
+
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js"></script>
+  <script src="{% static "cloud.js" %}"></script>
+  <link rel="stylesheet" href="{% static "doc_view.css" %}">
+
+</head>
+<body>
+  <div class="topnav">
+        <p class="head-left">Related Patent: {{Common.UCID}}</p>
+        <div class="head-right">       
+            <p onclick="activate(this)">Patents Compare</p> 
+            <p class="active" onclick="activate(this)">Common Analysis</p>       
+        </div> 
+  </div>
+
+  <div class="remind-pac">
+    <p>Query String: {{PAC}} ({{Qrel.ucid}})</p>
+  </div>
+
+  <div id="commonanalysis">
+    <div id="ipcr">
+      <h3>Common IPCR  <img id="question" class="normal" onclick="explanation(this)" src="{% static "question.png" %}"></h3>
+      <div id="explanation">
+        <h3>IPC Vector:</h3> 
+        <table>
+          <tr>
+            <th>Section</th>
+            <th>Class</th>
+            <th>Subclass</th>
+            <th>Maingroup / Subgroup</th>
+          </tr>
+         <tr>
+            <td>1 letter</td>
+            <td>2 letters</td>
+            <td>1 letters</td>
+            <td>1 or 2 / 1 or 2 letters</td>
+          </tr>
+        </table>
+
+        <p>Level 1: Section + Class + Subclass</p>
+        <p>Level 2: Section + Class + Subclass + Maingroup</p>
+        <p>Level 3: Section + Class + Subclass + Maingroup + Subgroup</p>
+      </div>
+
+      <ul>
+        <li><p>Level 1 Common IPCR:{{Common.r1}}</p></li>
+        <li><p>Level 2 Common IPCR:{{Common.r2}}</p></li>
+        <li><p>Level 3 Common IPCR:{{Common.r3}}</p></li>
+      </ul> 
+    </div>
+
+    <div id="chart1">
+      <h3>Common Abastract:</h3>
+    </div>
+    <div id="chart2">
+      <h3>Common Description:</h3>
+    </div>
+  </div>
+
+  <div id="patentscompare">
+    <div class="left">
+      <p id="ptitle" style="color:#9ed666;">Current Document: {{Patent.ucid}}</p>
+      <pre id="patent"></pre>
+    </div>
+
+    <div class="right">
+      <p id="qtitle" style="color:#9ed666;">Query Document: {{Qrel.ucid}}</p>
+      <pre id="qrel"></pre>
+    </div>
+      
+  </div>
+
+
+	
+
+	<script>
+    var pt = "{{Patent}}".replace(/&quot;/g,'');
+    var qr = "{{Qrel}}".replace(/&quot;/g,'');
+    pt = pt.replace(/,/g,',\n\n');
+    qr = qr.replace(/,/g,',\n\n');
+
+    pt = pt.replace(/{/g,'\{\n ');
+    qr = qr.replace(/{/g,'\{\n ');
+
+    document.getElementById("patent").innerHTML = pt;
+    document.getElementById("qrel").innerHTML = qr;
+    //document.getElementById('ptitle').innerHTML = "{{Patent.ucid}}";
+    //document.getElementById('qtitle').innerHTML = "{{Qrel.ucid}}";
+
+    function explanation(img){
+      var className = img.getAttribute("class");
+      if(className=="normal"){
+        img.className="active";
+        document.getElementById("explanation").style.display="block";
+      }else{
+        img.className="normal";
+        document.getElementById("explanation").style.display="none";
+      }
+    }
+
+    function activate(p) {
+            var className = p.getAttribute("class");
+            var l = p.parentNode.childNodes;
+            var i;
+            for(i=0;i<l.length;i++){
+                l[i].className="normal";
+            } 
+            p.className = "active";
+
+            switch(p.innerHTML){
+                case 'Common Analysis':{
+                    document.getElementById("commonanalysis").style.display="block";
+                    document.getElementById("patentscompare").style.display="none";
+                    break;
+
+                }
+                case 'Patents Compare':{
+                    document.getElementById("patentscompare").style.display="block";
+                    document.getElementById("commonanalysis").style.display="none";
+                    break;
+                }
+            }
+        }
+
+
+      var abstract_string = "{{Common.common_abstract}}";
+      drawWordCloud(abstract_string, "#chart1");
+
+      var description_string = "{{Common.common_description}}";
+      drawWordCloud(description_string, "#chart2");
+
+      function drawWordCloud(text_string, chart){
+        var common = "b,poop,i,ii,iii,v,me,my,myself,we,us,our,ours,ourselves,you,your,yours,yourself,yourselves,he,him,his,himself,she,her,hers,herself,it,its,itself,they,them,their,theirs,themselves,what,which,who,whom,whose,this,that,these,those,am,is,are,was,were,be,been,being,have,has,had,having,do,does,did,doing,will,would,should,can,could,ought,i'm,you're,he's,she's,it's,we're,they're,i've,you've,we've,they've,i'd,you'd,he'd,she'd,we'd,they'd,i'll,you'll,he'll,she'll,we'll,they'll,isn't,aren't,wasn't,weren't,hasn't,haven't,hadn't,doesn't,don't,didn't,won't,wouldn't,shan't,shouldn't,can't,cannot,couldn't,mustn't,let's,that's,who's,what's,here's,there's,when's,where's,why's,how's,a,an,the,and,but,if,or,because,as,until,while,of,at,by,for,with,about,against,between,into,through,during,before,after,above,below,to,from,up,upon,down,in,out,on,off,over,under,again,further,then,once,here,there,when,where,why,how,all,any,both,each,few,more,most,other,some,such,no,nor,not,only,own,same,so,than,too,very,say,says,said,shall,also";
+
+        var word_count = {};
+
+        var words = text_string.split(" ");
+
+        if (words.length == 1){
+            word_count[words[0]] = 1;
+        } else {
+            words.forEach(function(word){
+                var word = word.toLowerCase();
+                if (word != "" && common.indexOf(word)==-1 && word.length>1){
+                	if (word_count[word]){
+                    	word_count[word]++;
+                	} else {
+                    	word_count[word] = 1;
+                	}
+            	}
+            })
+        }
+
+        //console.log(word_count);
+        var fill = d3.scale.category20();
+
+        var word_entries = d3.entries(word_count);
+
+        var svg_location = chart;
+        if(chart == "#chart1"){
+        	var width = $(document).width();
+        	var height = $(document).height()/2;
+        	var xScale = d3.scale.linear()
+           		.domain([0, d3.max(word_entries, function(d) {
+                return d.value;
+            })
+           ])
+              .range([10,50]);
+        }else{
+        	var width = $(document).width();
+        	var height = $(document).height();
+        	var xScale = d3.scale.linear()
+           		.domain([0, d3.max(word_entries, function(d) {
+                return d.value;
+            })
+           ])
+              .range([10,15]);
+        }
+        
+
+        //console.log(word_entries);
+        console.log(width);
+        console.log(height);
+
+        d3.layout.cloud().size([width, height])
+          .timeInterval(60)
+          .words(word_entries)
+          .fontSize(function(d) { return xScale(+d.value); })
+          .text(function(d) { return d.key; })
+          .rotate(function() { return ~~(Math.random() * 2) * 90; })
+          .font("Impact")
+          .on("end", draw)
+          .start();
+
+        function draw(words) {
+        	console.log(words);
+          d3.select(svg_location).append("svg")
+              .attr("width", width)
+              .attr("height", height)
+            .append("g")
+              .attr("transform", "translate(" + [width >> 1, height >> 1] + ")")
+            .selectAll("text")
+              .data(words)
+            .enter().append("text")
+              .style("font-size", function(d) { return xScale(d.value) + "px"; })
+              .style("font-family", "Impact")
+              .style("fill", function(d, i) { return fill(i); })
+              .attr("text-anchor", "middle")
+              .attr("transform", function(d) {
+                return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+              })
+              .text(function(d) { 
+              	//console.log(d.key);
+              	return d.key; });
+        }
+
+        d3.layout.cloud().stop();
+      }
+  </script>
+
+
+
+</body>
+</html>

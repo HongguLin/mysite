@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>patent file</title>
+  {% load static %}
+	<link rel="stylesheet" href="{% static "patentfile.css" %}">
+</head>
+<body>
+  <div id="patentdiv">
+    <p id="ptitle" style="color:#9ed666;">Document: {{Patent.ucid}}</p>
+    <pre id="patent"></pre>     
+  </div>
+
+
+
+	<script>
+    var pt = "{{Patent}}".replace(/&quot;/g,'');
+    pt = pt.replace(/,/g,',\n\n');
+
+    pt = pt.replace(/{/g,'\{\n ');
+
+    document.getElementById("patent").innerHTML = pt;
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!-- index.html -->
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../static/index.css">
+  </head> 
+  <body>
+    <h1>Prior Art Retrieval Result Visualization</h1>
+    <div>
+      <form method="post" action="http://127.0.0.1:8000/visualization/">
+        {% csrf_token %}
+        <input type="text" name="Qkey" placeholder="Eg:PAC-1" required>
+        <br><input type="submit" value="Visualization">
+      </form> 
+    </div>
+     
+    <!-- Cycle through entries -->
+    <h2> {{ Qrel.PAC }} </h2>
+    {% for patent in Patents %}
+        <h2> {{ patent.Qkey }} </h2>
+        <p>{{ patent.Qimportance }}</p>
+        <p>{{patent.patent_document.ucid}}</p>
+    {% endfor %}  
+  </body>
+</html>
