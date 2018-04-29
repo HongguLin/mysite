@@ -15,7 +15,7 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-DBNAME = 'patent'
+DBNAME = 'ds161459.mlab.com:61459/patent'
 
 TEMPLATE_DIR = os.path.join( BASE_DIR, 'templates' )
 
@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.',
-        'NAME': 'patent',
+        'NAME': 'ds161459.mlab.com:61459/patent',
     }
 }
 
