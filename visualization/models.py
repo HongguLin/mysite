@@ -4,7 +4,7 @@ from mongoengine import *
 from mysite.settings import DBNAME
 from pymongo import *
 
-connect('patent', username='Honggu', password='548712580', host='@ds161459.mlab.com:61459')
+connect('patent', username='Honggu', password='548712580', host='@ds161459.mlab.com', port='61459')
 
 
 
