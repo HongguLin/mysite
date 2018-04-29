@@ -4,7 +4,8 @@ from mongoengine import *
 from mysite.settings import DBNAME
 from pymongo import *
 
-connect('ds161459.mlab.com:61459/patent -u Honggu -p 548712580')
+connect('patent', username='Honggu', password='548712580', host='@ds161459.mlab.com:61459')
+
 
 
 class Patent(DynamicDocument):
