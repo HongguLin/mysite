@@ -17,6 +17,7 @@ from django.urls import include, path
 from django.contrib import admin
 
 urlpatterns = [
-    path('visualization/', include('visualization.urls')),
+	path('', include('visualization.urls')),
+    #path('visualization/', include('visualization.urls')),
     path('admin/', admin.site.urls),
 ]
