@@ -7,8 +7,6 @@ from django.http import HttpResponse
 from mongoengine.base.datastructures import BaseList, BaseDict
 
 from nltk.tokenize import word_tokenize
-from nltk.tokenize import RegexpTokenizer
-from nltk.stem import PorterStemmer
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
 
@@ -205,7 +203,6 @@ def preprocess(mystring):
 	clean_tokens = []
 	for t in tokens:
 		stemmer = WordNetLemmatizer().lemmatize(t)
-		#stemmer = PorterStemmer().stem(t)
 		if stemmer not in sr:
 			clean_tokens.append(stemmer)
 	return clean_tokens

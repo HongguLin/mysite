@@ -1,5 +1,3 @@
 word_tokenize
-RegexpTokenizer
-PorterStemmer
 WordNetLemmatizer
 stopwords
