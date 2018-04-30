@@ -18,8 +18,6 @@ import mongoengine
 
 
 class Common:
-	user = authenticate(username=Honggu, password=548712580)
-	assert isinstance(user, mongoengine.django.auth.User)
 	def __init__(self, UCID, common_abstract, common_description, r1, r2, r3):
 		self.UCID = UCID
 		self.common_abstract = common_abstract
