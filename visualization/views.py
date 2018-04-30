@@ -70,22 +70,19 @@ def patent_file(request):
 def get_patents_section(patents):
 	slist = []
 	for patent in patents:
-		p_ipcr_list = patent.patent_document["bibliographic_data"]["technical_data"]["classifications_ipcr"]["classification_ipcr"]
-		for j in p_ipcr_list:
-			x = j["content"][0]
-			if x not in slist:
-				slist.append(x[0])
+		p_ipcr = patent.patent_document["ipcr"]
+		slist.extend(p_ipcr)
 	return slist
 
 
 
 def get_common_ipcr(qrel, patent):
-	ipcr_list = qrel.patent_document["bibliographic_data"]["technical_data"]["classifications_ipcr"]["classification_ipcr"]
+	ipcr_list = qrel.patent_document["ipcr"]
 	c_list_1 = []
 	c_list_2 = []
 	c_list_3 = []
 	for i in ipcr_list:
-		x = i["content"].split()
+		x = i.split()
 		x1 = x[1].split("/")
 
 		if x[0] not in c_list_1:
@@ -95,12 +92,12 @@ def get_common_ipcr(qrel, patent):
 		if x[0]+x[1] not in c_list_3:
 			c_list_3.append(x[0]+x[1])	
 
-	p_ipcr_list = patent.patent_document["bibliographic_data"]["technical_data"]["classifications_ipcr"]["classification_ipcr"]
+	p_ipcr_list = patent.patent_document["ipcr"]
 	p_c_list_1 = []
 	p_c_list_2 = []
 	p_c_list_3 = []
 	for j in p_ipcr_list:
-		x = j["content"].split()
+		x = j.split()
 		x1 = x[1].split("/")
 
 		if x[0] not in p_c_list_1:
@@ -117,6 +114,8 @@ def get_common_ipcr(qrel, patent):
 	relate = {"r1":relate1, "r2":relate2, "r3":relate3}	
 	return relate
 
+
+'''
 def get_content(content):
 	description = ""
 	if isinstance(content, str):
@@ -150,8 +149,6 @@ def get_dict_abs(abs_dict):
 	else:
 		print("bad format!")
 	return abstract
-
-
 
 def p2str(patent):
 	description = ""
@@ -196,6 +193,7 @@ def p2str(patent):
 		
 	my_dict = {"description": description, "abstract": abstract}
 	return my_dict
+'''
 
 def preprocess(mystring):
 	sr = stopwords.words('english')
@@ -211,14 +209,14 @@ def preprocess(mystring):
 	return clean_tokens
 
 def get_common(qrel, patent):
-	qrel_dict = p2str(qrel)
-	patent_dict = p2str(patent)
+	#qrel_dict = p2str(qrel)
+	#patent_dict = p2str(patent)
 
-	clean_qrel_abstract = preprocess(qrel_dict['abstract'])
-	clean_qrel_description = preprocess(qrel_dict['description'])
+	clean_qrel_abstract = preprocess(qrel.patent_document['abstract'])
+	clean_qrel_description = preprocess(qrel.patent_document['description'])
 
-	clean_patent_abstract = preprocess(patent_dict['abstract'])
-	clean_patent_description = preprocess(patent_dict['description'])
+	clean_patent_abstract = preprocess(patent.patent_document['abstract'])
+	clean_patent_description = preprocess(patent.patent_document['description'])
 
 	# common_abstract and common_description are string, word seperate by "," or space
 	common_abstract = list(set(clean_qrel_abstract).intersection(set(clean_patent_abstract)))

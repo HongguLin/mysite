@@ -108,7 +108,7 @@
             var A = document.createElement("A");
             A.innerHTML="view patent";
             A.href = "https://patentvis.herokuapp.com/visualization/patentfile?ucid="+"{{patent.patent_document.ucid}}";
-            var tit = "{{patent.patent_document.bibliographic_data.technical_data.invention_title}}".replace(/&#39;/g,'"');
+            var tit = "{{patent.patent_document.title}}".replace(/&#39;/g,'"');
             tit = tit.replace('[','');
             tit = tit.replace(']','');
             tit = tit.replace(/&quot;/g,'"');
@@ -132,7 +132,7 @@
                     }
                 }
             }else{
-                P3.innerHTML = 'Title: '+"{{patent.patent_document.bibliographic_data.technical_data.invention_title.content}}".toLowerCase();
+                P3.innerHTML = 'Title: '+"{{patent.patent_document.title}}".toLowerCase();
             }
             
             DIV.appendChild(P1);
