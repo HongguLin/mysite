@@ -70,8 +70,11 @@ def patent_file(request):
 def get_patents_section(patents):
 	slist = []
 	for patent in patents:
-		p_ipcr = patent.patent_document["ipcr"]
-		slist.extend(p_ipcr)
+		p_ipcr_list = patent.patent_document["ipcr"]
+		for j in p_ipcr_list:
+			x = j[0]
+			if x not in slist:
+				slist.append(x[0])
 	return slist
 
 

@@ -101,9 +101,9 @@
             var P1 = document.createElement("P");
             P1.innerHTML = 'ID: '+"{{patent.patent_document.ucid}}";
             P1.style = "color:#a1defc";
-            var P2 = document.createElement("P");
-            var date = "{{patent.patent_document.date}}";
-            P2.innerHTML = 'Date: '+date.substring(0,4)+'-'+date.substring(4,6)+'-'+date.substring(6,8);
+            //var P2 = document.createElement("P");
+            //var date = "{{patent.patent_document.date}}";
+            //P2.innerHTML = 'Date: '+date.substring(0,4)+'-'+date.substring(4,6)+'-'+date.substring(6,8);
             var P3 = document.createElement("P");
             var A = document.createElement("A");
             A.innerHTML="view patent";
@@ -136,7 +136,7 @@
             }
             
             DIV.appendChild(P1);
-            DIV.appendChild(P2);
+            //DIV.appendChild(P2);
             DIV.appendChild(P3);
             DIV.appendChild(A);
             pl.appendChild(DIV);
