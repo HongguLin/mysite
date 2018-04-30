@@ -15,8 +15,8 @@ import mongoengine
 
 _MONGODB_USER = 'Honggu'
 _MONGODB_PASSWD = '548712580'
-_MONGODB_HOST = 'ds161459.mlab.com:61459'
-_MONGODB_NAME = 'patent'
+_MONGODB_HOST = 'ds163779-a0.mlab.com:63779'
+_MONGODB_NAME = 'patentvis'
 _MONGODB_DATABASE_HOST = \
     'mongodb://%s:%s@%s/%s' \
     % (_MONGODB_USER, _MONGODB_PASSWD, _MONGODB_HOST, _MONGODB_NAME)
@@ -100,11 +100,11 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.',
-        'NAME': 'patent',
+        'NAME': 'patentvis',
         'USER': 'Honggu',
         'PASSWORD': '548712580',
-        'HOST': 'ds161459.mlab.com',
-        'PORT': '61459' 
+        'HOST': 'ds163779-a0.mlab.com',
+        'PORT': '63779' 
     }
 }
 
