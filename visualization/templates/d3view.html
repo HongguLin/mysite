@@ -107,7 +107,7 @@
             var P3 = document.createElement("P");
             var A = document.createElement("A");
             A.innerHTML="view patent";
-            A.href = "http://127.0.0.1:8000/visualization/patentfile?ucid="+"{{patent.patent_document.ucid}}";
+            A.href = "https://patentvis.herokuapp.com/visualization/patentfile?ucid="+"{{patent.patent_document.ucid}}";
             var tit = "{{patent.patent_document.bibliographic_data.technical_data.invention_title}}".replace(/&#39;/g,'"');
             tit = tit.replace('[','');
             tit = tit.replace(']','');
@@ -191,7 +191,7 @@
         }
 
         function redire(ucid){
-            var url = 'http://127.0.0.1:8000/visualization/patentfile?ucid='+ucid;
+            var url = 'https://patentvis.herokuapp.com/visualization/patentfile?ucid='+ucid;
             window.location = url;
 
         }
@@ -291,7 +291,7 @@
     		.attr("y", function(d){return d.y;})
     		.text(function(d){return d.UCID;})
             .on("click", function(d){
-                var url = 'http://127.0.0.1:8000/visualization/docview?ucid='+d.UCID;
+                var url = 'https://patentvis.herokuapp.com/visualization/docview?ucid='+d.UCID;
                 window.location = url;
                  });
 
@@ -315,7 +315,7 @@
             .attr("y", function(d){return d.y;})
             .text(function(d){return d.UCID;})
             .on("click", function(d){
-                var url = 'http://127.0.0.1:8000/visualization/docview?ucid='+d.UCID;
+                var url = 'https://patentvis.herokuapp.com/visualization/docview?ucid='+d.UCID;
                 window.location = url;
                  });
 
