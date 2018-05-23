@@ -4,10 +4,11 @@
 1. $python manage.py runserver
 
 ###Deploy to heroku:
-git add .
-git commit -m ''
-git push
-git push heroku master
+1. git add .
+2. git commit -m ''
+3. git push
+4. git push heroku master
 
 ###Deployed website:
+
 link: https://patentvis.herokuapp.com/visualization/
