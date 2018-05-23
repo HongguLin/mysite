@@ -1,7 +1,13 @@
-$mongod
+##How to Run From Source
 
-$mongo
+###Development Workflow:
+1. $python manage.py runserver
 
-$cd to the correct directory
+###Deploy to heroku:
+git add .
+git commit -m ''
+git push
+git push heroku master
 
-$python manage.py runserver
+###Deployed website:
+link: https://patentvis.herokuapp.com/visualization/

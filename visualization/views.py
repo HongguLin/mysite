@@ -118,85 +118,6 @@ def get_common_ipcr(qrel, patent):
 	return relate
 
 
-'''
-def get_content(content):
-	description = ""
-	if isinstance(content, str):
-		description += content
-	elif isinstance(content, BaseList) or isinstance(content, list):
-		for c in content:
-			if isinstance(c,str):
-				description += c
-	else:
-		print("bad format!")
-	return description
-
-def get_dict_abs(abs_dict):
-	abstract = ""
-	if "p" in abs_dict:
-		if isinstance(abs_dict["p"], str):
-			abstract = abs_dict["p"]
-		elif isinstance(abs_dict["p"], BaseDict) and "content" in abs_dict["p"]:
-			abstract += get_content(abs_dict["p"]["content"])
-		elif isinstance(abs_dict["p"], BaseList) or isinstance(abs_dict["p"], list):
-			#print(patent.patent_document["ucid"])
-			for x in abs_dict["p"]:
-				if isinstance(x, str):
-					abstract += x
-				elif isinstance(x, BaseDict) and "content" in x:
-					abstract += get_content(x["content"])
-				else:
-					print("bad format!")
-		else:
-			print("bad format!")
-	else:
-		print("bad format!")
-	return abstract
-
-def p2str(patent):
-	description = ""
-	abstract = ""
-
-	if "description" in patent.patent_document:
-		if patent.patent_document["description"]["lang"]=="EN":
-			description_list = patent.patent_document["description"]["p"]
-
-			if isinstance(description_list, BaseList):
-				for des in description_list:
-					if isinstance(des, str):
-						description += des
-					elif "content" in des:
-						description += get_content(des["content"])
-
-			elif isinstance(description_list, BaseDict):
-				if "pre" in description_list:
-					if "content" in description_list["pre"]:
-						description += get_content(description_list["pre"]["content"])
-				elif "content" in description_list:
-					description += get_content(description_list["content"])
-				else:
-					print("bad format!")
-
-			elif isinstance(description_list, str):
-				description += description_list
-				
-			else:
-				print("bad format!")
-
-	if "abstract" in patent.patent_document:
-		if isinstance(patent.patent_document["abstract"], BaseList) or isinstance(patent.patent_document["abstract"], list):
-			for x in patent.patent_document["abstract"]:
-				if x["lang"]=="EN":
-					abstract += get_dict_abs(x)
-		elif isinstance(patent.patent_document["abstract"], BaseDict):
-			if patent.patent_document["abstract"]["lang"]=="EN":
-				abstract += get_dict_abs(patent.patent_document["abstract"])
-		else:
-			print("bad format!")
-		
-	my_dict = {"description": description, "abstract": abstract}
-	return my_dict
-'''
 
 def preprocess(mystring):
 	sr = stopwords.words('english')
@@ -212,8 +133,6 @@ def preprocess(mystring):
 	return clean_tokens
 
 def get_common(qrel, patent):
-	#qrel_dict = p2str(qrel)
-	#patent_dict = p2str(patent)
 
 	clean_qrel_abstract = preprocess(qrel.patent_document['abstract'])
 	clean_qrel_description = preprocess(qrel.patent_document['description'])
